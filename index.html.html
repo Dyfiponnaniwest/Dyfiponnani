@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Donation Website</title>
+    <style>
+        body {
+            background-color: #ffe5e5; /* light red cream color */
+            font-family: Arial, sans-serif; /* Use Arial font */
+            color: #333; /* Dark text color */
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+        }
+
+        header {
+            background-color: #800000; /* Dark red background color */
+            color: #fff; /* White text color */
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #800000; /* Dark red text color */
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        form input[type="text"],
+        form input[type="password"],
+        form button {
+            padding: 10px;
+            margin-right: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        form button {
+            background-color: #000080; /* Dark red button background color */
+            color: #fff; /* White text color */
+            cursor: pointer;
+        }
+
+        section {
+            background-color: #fff; /* White background color */
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        footer {
+            background-color: #800000; /* Dark red footer background color */
+            color: #fff; /* White text color */
+            text-align: center;
+            padding: 10px 0;
+            position: fixed; /* Fixed to bottom */
+            width: 100%; /* Full width */
+            bottom: 0; /* Stick to bottom */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ഹൃദയപൂർവ്വം</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Find a Donor</a></li>
+            <li><a href="#">Contact Us</a></li>
+        </ul>
+    </nav>
+    <main>
+        <form id="loginForm">
+            <input type="text" name="username" id="username" placeholder="Username" required>
+            <input type="password" name="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <section>
+            <h2>Welcome to the Blood Donation Website</h2>
+           <p style="font-size: small; color: #ff6666;">യുവതയുടെ മനുഷ്യ സ്നേഹത്തിൻ്റെ കരുത്ത് .</p>
+            <p style="font-size: small; color: #ff6666;">DYFI പൊന്നാനി ബ്ലോക് കമ്മിറ്റി.</p>
+            <p style="font-size: small; color: #ff6666;">നിങ്ങൾക്ക് രക്തം ആവശ്യമുണ്ടെങ്കിൽ, താഴെയുള്ള നമ്പറിൽ ഞങ്ങളെ ബന്ധപ്പെടാം, ഞങ്ങൾ നിങ്ങളോടൊപ്പമുണ്ടാകും</p>
+            <p style="font-size: small; color: #ff6666;">9544789218, 9207146415, 8086621170,</p>            
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Blood Donation Website. All rights reserved @ DYFI പൊന്നാനി ബ്ലോക് കമ്മിറ്റി
+.</p>
+    </footer>
+
+    <script>
+        // Disable navigation through browser history using back and forward buttons
+        window.history.forward();
+        window.onload = function () {
+            window.history.forward();
+        }
+
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get input values
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            // Define valid usernames and passwords
+            var validUsers = {
+                "Fairose 2": "fairose22",
+                "user2": "password2",
+                "FAIROSE 1": "Fairose11",
+                "user3": "password3",
+                "user4": "password4",
+                "user5": "password5",
+                "user6": "password6",
+                "user7": "password7",
+                "user8": "password8",
+                "user9": "password9",
+                "user10": "password10"
+            };
+
+            // Check if the entered username and password match
+            if (validUsers.hasOwnProperty(username) && validUsers[username] === password) {
+                alert("Login successful!");
+                // Redirect to the new page
+                window.location.href = "newpage.html";
+            } else {
+                alert("Invalid username or password. Please try again.");
+            }
+        });
+    </script>
+</body>
+</html>
