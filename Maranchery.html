@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Table Example - Maranchery</title>
+<style>
+ body {
+        background: linear-gradient(135deg, #ff7e5f, #ff0000, #ffef9f); /* Red mixed background color */
+        font-family: Arial, sans-serif; /* Different font style */
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 20px;
+        color: #fff;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        padding: 10px;
+        border: 1px solid #fff;
+        text-align: left;
+    }
+
+    th {
+        background-color: #ff7e5f; /* Red background color for header */
+        color: #fff;
+    }
+
+    tr:nth-child(even) {
+        background-color: rgba(255, 255, 255, 0.8); /* Lighter background color for even rows */
+    }
+
+    tr:nth-child(odd) {
+        background-color: rgba(255, 255, 255, 0.9); /* Slightly darker background color for odd rows */
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 20px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+
+    button {
+        padding: 10px 20px;
+        margin-top: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #ff7e5f; /* Red background color for buttons */
+        color: #fff;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #ff0000; /* Darker red background color on hover */
+    }
+</style>
+<script>
+function addData() {
+    var table = document.getElementById("dataTable");
+    var row = table.insertRow();
+    for (var i = 0; i < 7; i++) { // Updated loop for 7 columns
+        var cell = row.insertCell(i);
+        cell.contentEditable = "true";
+    }
+}
+
+function saveData() {
+    var data = [];
+    var table = document.getElementById("dataTable");
+    var rows = table.rows;
+    for (var i = 1; i < rows.length; i++) { 
+        var rowData = {};
+        var cells = rows[i].cells;
+        var isEmptyRow = true;
+        for (var j = 0; j < cells.length; j++) {
+            rowData[table.rows[0].cells[j].innerText] = cells[j].innerText;
+            // Check if any cell in the row is not empty
+            if (cells[j].innerText.trim() !== "") {
+                isEmptyRow = false;
+            }
+        }
+        // If the row is not empty, add it to the data array
+        if (!isEmptyRow) {
+            data.push(rowData);
+        } else {
+            // If the row is empty, remove it from the table
+            table.deleteRow(i);
+            // Decrement the row index to account for the deleted row
+            i--;
+        }
+    }
+
+    localStorage.setItem('tableDataMaranchery', JSON.stringify(data));
+    console.log("Data saved locally for Maranchery page!");
+}
+function loadSavedData() {
+    var savedData = localStorage.getItem('tableDataMaranchery');
+    if (savedData) {
+        var data = JSON.parse(savedData);
+        var table = document.getElementById("dataTable");
+        for (var i = 0; i < data.length; i++) {
+            var row = table.insertRow();
+            for (var key in data[i]) {
+                if (data[i].hasOwnProperty(key)) {
+                    var cell = row.insertCell();
+                    cell.contentEditable = "true";
+                    cell.innerText = data[i][key];
+                }
+            }
+        }
+    } else {
+        // If there is no saved data, add an empty row with editable cells
+        addData();
+    }
+}
+
+function searchTable() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("dataTable");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 1; i < tr.length; i++) { // start from index 1 to skip header row
+        var matchFound = false;
+        td = tr[i].getElementsByTagName("td");
+        for (var j = 0; j < td.length; j++) {
+            txtValue = td[j].textContent || td[j].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                matchFound = true;
+                break;
+            }
+        }
+        if (matchFound) {
+            tr[i].style.display = "";
+        } else {
+            tr[i].style.display = "none";
+        }
+    }
+}
+    function downloadExcel() {
+    var table = document.getElementById("dataTable");
+    var rows = table.rows;
+    var csvContent = "data:text/csv;charset=utf-8,";
+
+    for (var i = 0; i < rows.length; i++) {
+        var cells = rows[i].cells;
+        var rowData = [];
+        for (var j = 0; j < cells.length; j++) {
+            rowData.push(cells[j].innerText);
+        }
+        csvContent += rowData.join(",") + "\n";
+    }
+
+    var encodedUri = encodeURI(csvContent);
+    var link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "table_data.csv");
+    document.body.appendChild(link);
+    link.click();
+}
+
+window.onload = loadSavedData;
+</script>
+</head>
+<body>
+
+<h1>Blood Donor's Details - Maranchery</h1>
+
+<table id="dataTable">
+  <tr>
+    <th>SL No:</th>
+    <th>Name</th>
+    <th>Blood group</th>
+    <th>Address</th>
+    <th>Mobile Number</th>
+    <th>Ward</th>
+    <th>Availabilty</th> <!-- New column -->
+  </tr>
+</table>
+<button onclick="addData()">Add Row</button>
+<button onclick="saveData()">Save Data</button>
+<button onclick="downloadExcel()">Download Excel</button>
+<!-- Search input field -->
+<input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search in table...">
+
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kerala Districts</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #ff7e5f, #ff0000, #ffef9f); /* Red mixed background color */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Different font styles */
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #fff;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        li {
+            width: 22%; /* Display 4 district names in a row */
+            margin: 10px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        li:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        a {
+            color: #333;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        #malappuramPanchayats li {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Districts wise list</h1>
+    <ul>
+        <li onclick="togglePanchayats('Thiruvananthapuram')">Thiruvananthapuram</li>
+        <li onclick="togglePanchayats('Kollam')">Kollam</li>
+        <li onclick="togglePanchayats('Pathanamthitta')">Pathanamthitta</li>
+        <li onclick="togglePanchayats('Alappuzha')">Alappuzha</li>
+        <li onclick="togglePanchayats('Kottayam')">Kottayam</li>
+        <li onclick="togglePanchayats('Idukki')">Idukki</li>
+        <li onclick="togglePanchayats('Ernakulam')">Ernakulam</li>
+        <li onclick="togglePanchayats('Thrissur')">Thrissur</li>
+        <li onclick="togglePanchayats('Palakkad')">Palakkad</li>
+        <li onclick="window.location.href = 'malappuram_panchayats.html'">Malappuram</li>
+        <li onclick="togglePanchayats('Kozhikode')">Kozhikode</li>
+        <li onclick="togglePanchayats('Wayanad')">Wayanad</li>
+        <li onclick="togglePanchayats('Kannur')">Kannur</li>
+        <li onclick="togglePanchayats('Kasaragod')">Kasaragod</li>
+    </ul>
+
+    <script>
+    // Function to toggle panchayats visibility
+    function togglePanchayats(district) {
+        const panchayats = document.getElementById(`${district.toLowerCase()}Panchayats`);
+        panchayats.style.display = panchayats.style.display === 'none' ? 'block' : 'none';
+
+        // Push current state to history
+        history.pushState({ page: district }, null, "");
+    }
+
+    // Disable back and forward buttons
+    window.onload = function () {
+        window.history.pushState({ page: null }, '');
+        window.onpopstate = function (event) {
+            if (event.state && event.state.page) {
+                const panchayats = document.getElementById(`${event.state.page.toLowerCase()}Panchayats`);
+                if (panchayats.style.display === 'none') {
+                    panchayats.style.display = 'block';
+                } else {
+                    panchayats.style.display = 'none';
+                }
+            } else {
+                history.pushState(null, null, "");
+            }
+        };
+    };
+        
+        // Disable back button
+    window.onload = function () {
+        window.history.pushState({ page: null }, '');
+        window.onpopstate = function (event) {
+            history.pushState(null, null, "");
+        };
+    };
+</script>
+</body>
+</html> 
